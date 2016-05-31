@@ -13,16 +13,16 @@ class Login extends CI_Controller {
     public function __construct() 
     {
         parent::__construct();
-        $this->load->model('docente_model', 'docente');
+        $this->load->model('usuario_model', 'usuario');
         $this->template->set('desabilitarmenu', true);
     }
     
     public function index()
     {
         if($this->input->post()){
-            $this->docente->usuario = $this->input->post('usuario');
-            $this->docente->senha = md5($this->input->post('senha'));
-            $retorno = $this->docente->autenticar();
+            $this->usuario->usuario = $this->input->post('usuario');
+            $this->usuario->senha = md5($this->input->post('senha'));
+            $retorno = $this->usuario->autenticar();
             
             if(isset($retorno)){
                 $user_data = array(
@@ -39,14 +39,5 @@ class Login extends CI_Controller {
         }
         $dados['msg'] = $this->session->flashdata('msg');
         $this->template->load($this->_template, 'login_view', $dados);
-    }
-    
-    public function teste()
-    {
-        $this->docente->usuario = '13026';
-        $this->docente->senha = md5('123');
-        
-        $doc = $this->docente->autenticar();
-        print_r($doc);
     }
 }

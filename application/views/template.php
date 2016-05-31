@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SigPROF IFSP Capivari</title>
+    <title>IFCPV - Auth Center</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="<?php echo base_url('assets/css/bootstrap.min.css') ?>" rel="stylesheet">
@@ -35,7 +35,7 @@
             <ul class="sidebar-nav">
                 <li class="sidebar-brand">
                     <a href="#">
-                        SigPROF
+                        IFCPV - Auth Center
                     </a>
                 </li>
                 <?php if(!isset($desabilitarmenu)) : ?>

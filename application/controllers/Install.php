@@ -15,6 +15,7 @@ class Install extends CI_Controller {
     
     public function index()
     {
+        /*
         $this->load->database();
         $this->load->model('usuario_model', 'usuario');
         
@@ -25,11 +26,36 @@ class Install extends CI_Controller {
         $this->usuario->token = md5(date('YmdHis'));
         
         if($this->usuario->insert()){
-            echo 'Instalado com sucesso';
+            echo 'Usuario criado <br>';
         }
         else{
             echo 'Erro...';
-        }
+        }        
+        
+        
+       $this->load->model('app_model', 'app');
+       $this->app->nome_app = 'Auth Center';
+       $this->app->url_app = 'http://localhost/ifcpv-auth-center';
+       $this->app->token_app = md5(date('YmdHis'));
+       
+       if($this->app->insert()){
+           echo 'App criada <br>';
+       }
+       else{
+           echo 'Erro...';
+       }
+       */
+       $this->load->model('usuarioapp_model', 'usuario_app');
+       $this->usuario_app->usuario_id = 1;
+       $this->usuario_app->app_id = 1;
+       $this->usuario_app->perfil = 'Master';
+       
+       if($this->usuario_app->insert()){
+           echo 'Usuario App criada <br>';
+       }
+       else{
+           echo 'Erro...';
+       }
     }
     
 }
