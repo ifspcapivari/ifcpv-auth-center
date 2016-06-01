@@ -22,7 +22,7 @@ class Login extends CI_Controller {
         if($this->input->post()){
             $this->usuario->usuario = $this->input->post('usuario');
             $this->usuario->senha = md5($this->input->post('senha'));
-            $retorno = $this->usuario->autenticar();
+            $retorno = $this->usuario->autenticar(TOKEN_APP);
             
             if(isset($retorno)){
                 $user_data = array(

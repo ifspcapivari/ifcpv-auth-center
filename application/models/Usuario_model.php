@@ -23,7 +23,7 @@ class Usuario_model extends CI_Model {
         return $this->db->insert('usuario', $this);
     }
     
-    public function autenticar()
+    public function autenticar($token_app)
     {
         return  $this->db
                 ->select('nome, token, perfil')
@@ -32,6 +32,7 @@ class Usuario_model extends CI_Model {
                 ->join('app a', 'ua.app_id = a.id')
                 ->where('usuario', $this->usuario)
                 ->where('senha', $this->senha)
+                ->where('token_app', $token_app)
                 ->get()
                 ->row_object();
     }
@@ -80,5 +81,16 @@ class Usuario_model extends CI_Model {
         }
         
         return $array;
+    }
+    
+    public function getByOne($param, $value, $fields = '*')
+    {
+        return  $this->db
+                ->select($fields)
+                ->from('usuario u')
+                ->join('usuario_app ua', 'u.id = ua.usuario_id')
+                ->where($param, $value)
+                ->get()
+                ->row_object();
     }
 }

@@ -41,9 +41,6 @@
                 <?php if(!isset($desabilitarmenu)) : ?>
                 <?php $this->load->view('menu_' . strtolower($this->session->perfil)) ?>
                 <li>
-                    <a href="#">Ajuda</a>
-                </li>
-                <li>
                     <a href="<?php echo base_url('sair') ?>">Sair</a>
                 </li>
                 <?php endif; ?>

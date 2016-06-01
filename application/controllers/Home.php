@@ -13,12 +13,15 @@ class Home extends CI_Controller {
     public function __construct() 
     {
         parent::__construct();
-        //validar_sessao($this->session, array('token', 'perfil'), 'login');
-        //$this->load->model('docente_model', 'docente');
+        validar_sessao($this->session, array('token', 'perfil'), 'login');
+        $this->load->model('usuario_model', 'usuario');
     }
     
     public function index()
     {
-        echo 'Hello World!';
+        $dados['usuario'] = $this->usuario->getByOne('token', $this->session->token);
+        $dados['active'] = 'home';
+        $dados['msg'] = $this->session->flashdata('msg');
+        $this->template->load($this->_template, 'home_view', $dados);
     }
 }
