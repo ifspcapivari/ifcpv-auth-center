@@ -93,4 +93,16 @@ class Usuario_model extends CI_Model {
                 ->get()
                 ->row_object();
     }
+    
+    public function getUsuarioByGrupo($grupo_id)
+    {
+        return  $this->db
+                ->select('*')
+                ->from('usuario u')
+                ->join('usuario_grupo ua', 'u.id = ua.usuario_id')
+                ->join('grupo g', 'ua.grupo_id = g.id')
+                ->where('g.id', $grupo_id)
+                ->get()
+                ->result();
+    }
 }

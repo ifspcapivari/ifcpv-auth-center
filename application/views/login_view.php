@@ -1,7 +1,5 @@
 <h1>Acessar o Auth Center</h1>
-<?php if($msg) : ?>
-<div class="alert alert-danger"><?php echo $this->session->flashdata('msg') ?></div>
-<?php endif; ?>
+<?php echo display_flash_var('msg', '<div class="alert alert-danger">{{$var}}</div>') ?>
 <form method="post">
     <div class="form-group">
         <label for="usuario">Usuário:</label>

@@ -1,8 +1,6 @@
 <h1>Dados Pessoais</h1>
     <br />
-    <?php if($msg) : ?>
-    <div class="alert alert-danger"><?php echo $msg ?></div>
-    <?php endif; ?>
+    <?php echo display_flash_var('msg', '<div class="alert alert-danger">{{$var}}</div>') ?>
     <br />
     <div class="form-group">
         <label for="nome">Nome:</label>

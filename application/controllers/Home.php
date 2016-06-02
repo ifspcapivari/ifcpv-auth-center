@@ -21,7 +21,6 @@ class Home extends CI_Controller {
     {
         $dados['usuario'] = $this->usuario->getByOne('token', $this->session->token);
         $dados['active'] = 'home';
-        $dados['msg'] = $this->session->flashdata('msg');
         $this->template->load($this->_template, 'home_view', $dados);
     }
 }

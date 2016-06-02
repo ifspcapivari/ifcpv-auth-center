@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
- * Description of Home
+ * Description of Login
  *
  * @author Rafael W. Pinheiro
  */
@@ -37,7 +37,6 @@ class Login extends CI_Controller {
                 redirect('login');
             }
         }
-        $dados['msg'] = $this->session->flashdata('msg');
-        $this->template->load($this->_template, 'login_view', $dados);
+        $this->template->load($this->_template, 'login_view');
     }
 }
