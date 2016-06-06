@@ -20,7 +20,21 @@ class Usuario_model extends CI_Model {
     
     public function insert()
     {
+        $this->criptografarSenha();
+        $this->generateToken();
         return $this->db->insert('usuario', $this);
+    }
+    
+    private function generateToken()
+    {
+        $this->token = md5(date('YmdHis'));
+    }
+    
+    private function criptografarSenha()
+    {
+        if(isset($this->senha)){
+            $this->senha = md5($this->senha);
+        }
     }
     
     public function autenticar($token_app)
@@ -104,5 +118,10 @@ class Usuario_model extends CI_Model {
                 ->where('g.id', $grupo_id)
                 ->get()
                 ->result();
+    }
+    
+    public function getAll()
+    {
+        return $this->db->get('usuario')->result();
     }
 }

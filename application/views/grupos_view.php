@@ -1,4 +1,4 @@
-<h1>Gerenciar Semestres</h1>
+<h1>Gerenciar Grupos</h1>
 <br />
 <?php echo display_flash_var('msg', '<div class="alert alert-danger">{{$var}}</div>') ?>
 <br />
