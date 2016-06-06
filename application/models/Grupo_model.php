@@ -36,9 +36,29 @@ class Grupo_model extends CI_Model {
         } 
     }
     
-    public function getAll()
+    public function getAll($with_count = false)
     {
-        return $this->db->get('grupo')->result();
+        if($with_count == false){
+            return $this->db->get('grupo')->result();
+        }
+        else{
+            return  $this->db->select('id, nome_grupo, descricao_grupo, count(ug.usuario_id) as num_usuarios')
+                    ->from('grupo g')
+                    ->join('usuario_grupo ug', 'g.id = ug.grupo_id')
+                    ->group_by('id')
+                    ->get()
+                    ->result();
+        }
+    }
+    
+    public function getByOne($param, $value, $fields = '*')
+    {
+        return  $this->db
+                ->select($fields)
+                ->from('grupo g')
+                ->where($param, $value)
+                ->get()
+                ->row_object();
     }
         
 }

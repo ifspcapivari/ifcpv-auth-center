@@ -113,15 +113,26 @@ class Usuario_model extends CI_Model {
         return  $this->db
                 ->select('*')
                 ->from('usuario u')
-                ->join('usuario_grupo ua', 'u.id = ua.usuario_id')
-                ->join('grupo g', 'ua.grupo_id = g.id')
-                ->where('g.id', $grupo_id)
+                ->join('usuario_grupo ug', 'u.id = ug.usuario_id')
+                ->where('ug.grupo_id', $grupo_id)
                 ->get()
+                ->result();
+    }
+    
+    //Retorna todos os Usuarios que NÃO fazem parte de um grupo!
+    public function getUsuarioAvailableForGrupo($grupo_id)
+    {
+        return  $this->db
+                ->query("SELECT * FROM usuario u WHERE u.id NOT IN (SELECT usuario_id FROM usuario_grupo ug WHERE ug.grupo_id = $grupo_id)")
                 ->result();
     }
     
     public function getAll()
     {
         return $this->db->get('usuario')->result();
+    }
+    
+    public function __toString() {
+        return $this->nome;
     }
 }
