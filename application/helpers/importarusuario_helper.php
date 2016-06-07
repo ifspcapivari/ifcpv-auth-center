@@ -1,12 +1,11 @@
 <?php
 
-/* Vai ler o arquivo CSV $file e retornar um array para ser inserido por batch no DB*/
+/* Vai ler o arquivo CSV $file e retornar um array para ser inserido por batch no DB
+ * Nome | Email | Usuario | Senha
+ * 
+*/
 function importar($file)
-{
-    //Requer o slug_helper
-    $ci =& get_instance();
-    $ci->load->helper('slug');
-    
+{    
     $pont = fopen($file, 'r');
     $list = array();
     $cont = 0;
@@ -18,11 +17,9 @@ function importar($file)
         }
         $reg = array(
             'nome'    => $data[0],
-            'slug'    => url_slug($data[0]),
             'email'   => $data[1],
-            'perfil'  => 'Docente',
             'usuario' => $data[2],
-            'senha'   => md5('123456'),
+            'senha'   => md5($data[3]),
             'token'   => md5(date('YmdHis') . microtime(true))
         );
         $list[] = $reg;
