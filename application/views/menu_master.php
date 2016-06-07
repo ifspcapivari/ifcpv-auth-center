@@ -7,3 +7,6 @@
 <li>
     <a href="<?php echo base_url('grupos') ?>" <?php echo (!$active || $active == 'grupos' ? 'class="active"' : '') ?>>Grupos</a>
 </li>
+<li>
+    <a href="<?php echo base_url('app') ?>" <?php echo (!$active || $active == 'app' ? 'class="active"' : '') ?>>Aplicações</a>
+</li>

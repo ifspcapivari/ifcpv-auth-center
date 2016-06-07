@@ -21,4 +21,9 @@ class App_model extends CI_Model {
     {
         return $this->db->insert('app', $this);
     }
+    
+    public function getAll()
+    {
+        return $this->db->get('app')->result();
+    }
 }

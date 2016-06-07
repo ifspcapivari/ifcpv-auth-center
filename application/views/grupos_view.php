@@ -19,11 +19,11 @@
         <form method="post" action="<?php echo base_url('grupos/add') ?>">
             <div class="modal-body">
                 <div class="form-group">
-                    <label for="descricao">Nome do Grupo:</label>
+                    <label for="nome_grupo">Nome do Grupo:</label>
                     <input type="text" class="form-control" id="nome_grupo" name="nome_grupo" placeholder="Nome do Grupo">
                 </div>
                 <div class="form-group">
-                    <label for="descricao">Descrição para esse grupo:</label>
+                    <label for="descricao_grupo">Descrição para esse grupo:</label>
                     <textarea class="form-control" id="descricao_grupo" name="descricao_grupo" placeholder="Descrição do Grupo"></textarea>
                 </div>
             </div>

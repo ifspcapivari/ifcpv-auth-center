@@ -22,19 +22,19 @@
         <form method="post" action="<?php echo base_url('usuarios/add') ?>">
             <div class="modal-body">
                 <div class="form-group">
-                    <label for="descricao">Nome:</label>
+                    <label for="nome">Nome:</label>
                     <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome Completo">
                 </div>
                 <div class="form-group">
-                    <label for="descricao">Email:</label>
+                    <label for="email">Email:</label>
                     <input type="text" class="form-control" id="email" name="email" placeholder="Email do Usuário">
                 </div>
                 <div class="form-group">
-                    <label for="descricao">Usuário:</label>
+                    <label for="usuario">Usuário:</label>
                     <input type="text" class="form-control" id="usuario" name="usuario" placeholder="Nome de usuário">
                 </div>
                 <div class="form-group">
-                    <label for="descricao">Senha:</label>
+                    <label for="senha">Senha:</label>
                     <input type="password" class="form-control" id="senha" name="senha">
                 </div>
             </div>
@@ -57,7 +57,7 @@
         <form method="post" action="<?php echo base_url('usuarios/import_list') ?>" enctype="multipart/form-data">
             <div class="modal-body">
                 <div class="form-group">
-                    <label for="foto">Escolha um arquivo no formato CSV:</label>
+                    <label for="arquivo">Escolha um arquivo no formato CSV:</label>
                     <input type="file" class="form-control" id="arquivo" name="arquivo">
                 </div>
             </div>
