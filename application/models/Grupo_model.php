@@ -44,7 +44,7 @@ class Grupo_model extends CI_Model {
         else{
             return  $this->db->select('id, nome_grupo, descricao_grupo, count(ug.usuario_id) as num_usuarios')
                     ->from('grupo g')
-                    ->join('usuario_grupo ug', 'g.id = ug.grupo_id')
+                    ->join('usuario_grupo ug', 'g.id = ug.grupo_id', 'left')
                     ->group_by('id')
                     ->get()
                     ->result();
