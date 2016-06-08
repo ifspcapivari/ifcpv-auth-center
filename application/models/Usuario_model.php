@@ -127,6 +127,25 @@ class Usuario_model extends CI_Model {
                 ->result();
     }
     
+    public function getUsuarioByApp($app_id)
+    {
+        return  $this->db
+                ->select('*')
+                ->from('usuario u')
+                ->join('usuario_app ua', 'u.id = ua.usuario_id')
+                ->where('ua.app_id', $app_id)
+                ->get()
+                ->result();
+    }
+    
+    //Retorna todos os Usuarios que NÃO fazem parte de um grupo!
+    public function getUsuarioAvailableForApp($app_id)
+    {
+        return  $this->db
+                ->query("SELECT * FROM usuario u WHERE u.id NOT IN (SELECT usuario_id FROM usuario_app ua WHERE ua.app_id = $app_id)")
+                ->result();
+    }
+    
     public function getAll()
     {
         return $this->db->get('usuario')->result();

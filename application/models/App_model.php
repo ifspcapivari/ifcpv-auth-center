@@ -19,11 +19,37 @@ class App_model extends CI_Model {
     
     public function insert()
     {
+        $this->generateToken();
         return $this->db->insert('app', $this);
     }
     
-    public function getAll()
+    private function generateToken()
     {
-        return $this->db->get('app')->result();
+        $this->token_app = md5(HASH_SYSTEM . date('YmdHis'));
+    }
+    
+    public function getAll($with_count = false)
+    {
+        if($with_count == false){
+            return $this->db->get('app')->result();
+        }
+        else{
+            return  $this->db->select('id, nome_app, descricao_app, url_app, token_app, count(ua.usuario_id) as num_usuarios')
+                    ->from('app a')
+                    ->join('usuario_app ua', 'a.id = ua.app_id', 'left')
+                    ->group_by('id')
+                    ->get()
+                    ->result();
+        }
+    }
+    
+    public function getByOne($param, $value, $fields = '*')
+    {
+        return  $this->db
+                ->select($fields)
+                ->from('app a')
+                ->where($param, $value)
+                ->get()
+                ->row_object();
     }
 }

@@ -10,6 +10,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | altamente recomendável que elas não sejam excluídas.
 |
 */
+define('HASH_SYSTEM', '85a3af1ecfa67b868d236341e2325526'); //Esse Hash será utilizado para gerar os tokens das APPs
 define('TOKEN_APP', '34d8e18e40e2ec285bc6083fba31ceb1');
 
 /*
