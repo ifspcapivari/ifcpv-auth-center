@@ -52,4 +52,9 @@ class App_model extends CI_Model {
                 ->get()
                 ->row_object();
     }
+    
+    public function validar_token($token_app)
+    {
+        return is_object($this->getByOne('token_app', $token_app, 'id')) ? true : false;
+    }
 }

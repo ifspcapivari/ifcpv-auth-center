@@ -39,8 +39,11 @@ class Usuario_model extends CI_Model {
     
     public function autenticar($token_app)
     {
-        return  $this->db
-                ->select('nome, token, perfil')
+        if(empty($this->usuario) || empty($this->senha)){
+            return false;
+        }
+        $usuario =  $this->db
+                ->select('nome, email, usuario, token, perfil')
                 ->from('usuario u')
                 ->join('usuario_app ua', 'u.id = ua.usuario_id')
                 ->join('app a', 'ua.app_id = a.id')
@@ -49,6 +52,8 @@ class Usuario_model extends CI_Model {
                 ->where('token_app', $token_app)
                 ->get()
                 ->row_object();
+        
+        return is_object($usuario) ? $usuario : false;
     }
     
     public function insertBatch($list)

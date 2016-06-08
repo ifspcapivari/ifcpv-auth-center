@@ -13,19 +13,51 @@ class Api extends REST_Controller {
     public function __construct() {
         parent::__construct();
 
-        $this->load->model('docente_model', 'docente');
+        $this->load->model('usuario_model', 'usuario');
+        $this->load->model('app_model', 'app');
     }
     
-    public function docentes_get($slug = NULL)
+    public function auth_post($token_app = NULL)
     {
-        $fields = 'nome, email, foto, curriculo, titulacao, descricao';
-        $resp = $this->docente->getByOne('slug', $slug, $fields);
+        $data = array();
         
-        if(count($resp) > 0){
-            $resp->foto = (!is_null($resp->foto) && file_exists('./assets/fotos/' . $resp->foto) ? base_url('assets/fotos/' . $resp->foto) : base_url('assets/img/profile-default.png'));        
+        if($token_app == NULL){
+            $data['code'] = 401;
+            $data['message'] = 'Empty Token APP';
+            $data['status'] = 'error';
+            $data['data'] = 'UnauthorizedException';
+            
+            $this->response($data);
         }
-    
-        $this->display($resp);
+        
+        if(!$this->app->validar_token($token_app)){
+            $data['code'] = 401;
+            $data['message'] = 'Token APP is invalid';
+            $data['status'] = 'error';
+            $data['data'] = 'UnauthorizedException';
+            
+            $this->response($data);
+        }
+        
+        $this->usuario->usuario = $this->post('usuario');
+        $this->usuario->senha = md5($this->post('senha'));
+        $resp = $this->usuario->autenticar($token_app);
+        
+        if(!$resp){
+            $data['code'] = 401;
+            $data['message'] = 'User credentials are invalids';
+            $data['status'] = 'error';
+            $data['data'] = 'UnauthorizedException';
+            
+            $this->response($data);
+        }
+        else{
+            $data['code'] = 200;
+            $data['status'] = 'success';
+            $data['data'] = $resp;
+            
+            $this->response($data);            
+        }
     }
     
     protected function display($resp)
