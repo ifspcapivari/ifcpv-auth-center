@@ -10,6 +10,8 @@ require_once APPPATH . '/libraries/REST_Controller.php';
 
 class Api extends REST_Controller {
     
+    private $_data;
+    
     public function __construct() {
         parent::__construct();
 
@@ -17,47 +19,81 @@ class Api extends REST_Controller {
         $this->load->model('app_model', 'app');
     }
     
-    public function auth_post($token_app = NULL)
+    private function _validateToken($token_app)
     {
-        $data = array();
-        
         if($token_app == NULL){
-            $data['code'] = 401;
-            $data['message'] = 'Empty Token APP';
-            $data['status'] = 'error';
-            $data['data'] = 'UnauthorizedException';
+            $this->_data['code'] = 401;
+            $this->_data['message'] = 'Empty Token APP';
+            $this->_data['status'] = 'error';
+            $this->_data['data'] = 'UnauthorizedException';
             
-            $this->response($data);
+            return false;
         }
         
         if(!$this->app->validar_token($token_app)){
-            $data['code'] = 401;
-            $data['message'] = 'Token APP is invalid';
-            $data['status'] = 'error';
-            $data['data'] = 'UnauthorizedException';
+            $this->_data['code'] = 401;
+            $this->_data['message'] = 'Token APP is invalid';
+            $this->_data['status'] = 'error';
+            $this->_data['data'] = 'UnauthorizedException';
             
-            $this->response($data);
+            return false;
         }
         
-        $this->usuario->usuario = $this->post('usuario');
-        $this->usuario->senha = md5($this->post('senha'));
-        $resp = $this->usuario->autenticar($token_app);
-        
-        if(!$resp){
-            $data['code'] = 401;
-            $data['message'] = 'User credentials are invalids';
-            $data['status'] = 'error';
-            $data['data'] = 'UnauthorizedException';
-            
-            $this->response($data);
+        return true;
+    }
+    
+    public function auth_post($token_app = NULL)
+    {
+        if($this->_validateToken($token_app)){
+            $this->usuario->usuario = $this->post('usuario');
+            $this->usuario->senha = md5($this->post('senha'));
+            $resp = $this->usuario->autenticar($token_app);
+
+            if(!$resp){
+                $this->_data['code'] = 401;
+                $this->_data['message'] = 'User credentials are invalids';
+                $this->_data['status'] = 'error';
+                $this->_data['data'] = 'UnauthorizedException';
+            }
+            else{
+                $this->_data['code'] = 200;
+                $this->_data['status'] = 'success';
+                $this->_data['data'] = $resp;
+            }
         }
-        else{
-            $data['code'] = 200;
-            $data['status'] = 'success';
-            $data['data'] = $resp;
+        $this->response($this->_data);
+    }
+    
+    public function changepass_post($token_app = NULL)
+    {
+        if($this->_validateToken($token_app)){
+            $this->usuario->usuario = $this->post('usuario');
+            $this->usuario->senha = md5($this->post('senha'));
+            $auth = $this->usuario->autenticar($token_app);
             
-            $this->response($data);            
+            if(!$auth){
+                $this->_data['code'] = 401;
+                $this->_data['message'] = 'User credentials are invalids';
+                $this->_data['status'] = 'error';
+                $this->_data['data'] = 'UnauthorizedException';
+            }
+            else{
+                $usuario = $this->usuario->getByOne('token', $auth->token);
+                $usuario->senha = md5($this->post('novasenha'));
+                if($this->usuario->update($usuario)){
+                    $this->_data['code'] = 200;
+                    $this->_data['status'] = 'success';
+                    $this->_data['data'] = array();
+                }
+                else{
+                    $this->_data['code'] = 401;
+                    $this->_data['message'] = 'Update error';
+                    $this->_data['status'] = 'error';
+                    $this->_data['data'] = 'UnauthorizedException';
+                }
+            }
         }
+        $this->response($this->_data);
     }
     
     protected function display($resp)

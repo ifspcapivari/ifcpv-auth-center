@@ -25,6 +25,11 @@ class Usuario_model extends CI_Model {
         return $this->db->insert('usuario', $this);
     }
     
+    public function update($usuario)
+    {
+        return $this->db->update('usuario', $usuario, array('token' => $usuario->token));        
+    }
+        
     private function generateToken()
     {
         $this->token = md5(date('YmdHis'));
@@ -107,7 +112,6 @@ class Usuario_model extends CI_Model {
         return  $this->db
                 ->select($fields)
                 ->from('usuario u')
-                ->join('usuario_app ua', 'u.id = ua.usuario_id')
                 ->where($param, $value)
                 ->get()
                 ->row_object();
