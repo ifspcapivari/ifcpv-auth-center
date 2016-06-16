@@ -12,7 +12,7 @@
     </div>
     <div class="form-group">
         <label for="perfil">Perfil:</label>
-        <input type="text" class="form-control" id="perfil" value="<?php echo $usuario->perfil ?>" readonly>
+        <input type="text" class="form-control" id="perfil" value="<?php echo $this->session->perfil ?>" readonly>
     </div>
     <div class="form-group">
         <label for="usuario">Usuário:</label>
