@@ -20,10 +20,10 @@ function importar($file)
             'email'   => $data[1],
             'usuario' => $data[2],
             'senha'   => md5($data[3]),
-            'token'   => md5(date('YmdHis') . microtime(true))
+            'token'   => md5($data[2] . date('YmdHis') . microtime(true))
         );
         $list[] = $reg;
-        usleep(10);//delay para que seja gerado um token diferente
+        usleep(50);//delay para que seja gerado um token diferente
     }
     fclose($pont);
     return $list;
