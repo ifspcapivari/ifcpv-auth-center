@@ -96,13 +96,13 @@ class Api extends REST_Controller {
         $this->response($this->_data);
     }
     
-    public function users_get($token_app = NULL)
+    public function users_get($token_app = NULL, $token_user = NULL)
     {
         if($this->_validateToken($token_app)){
             $this->load->model('app_model', 'app');
             $app_id = $this->app->getByOne('token_app', $token_app, 'id')->id;
             
-            $list_usuarios = $this->usuario->getUsuarioByApp($app_id);
+            $list_usuarios = $this->usuario->getUsuarioByApp($app_id, $token_user);
             
             $this->_data['code'] = 200;
             $this->_data['status'] = 'success';
